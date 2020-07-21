@@ -11,6 +11,18 @@ module.exports = app => {
     return context.github.issues.createComment(issueComment)
   })
 
+
+  app.on('issues.changed', async context => {
+    console.log(context.repo({
+      issue_number: this.context.issue().number
+    }))
+    const tracker = await getTracker(context);
+    console.log(tracker.hasMobileLabel());
+  })
+
+  async function getTracker(context) {
+    return new Tracker(context, "");
+  }
   // For more information on building apps:
   // https://probot.github.io/docs/
 
