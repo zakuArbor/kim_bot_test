@@ -2,6 +2,8 @@
  * This is the main entrypoint to your Probot app
  * @param {import('probot').Application} app
  */
+const Tracker = require('./lib/Tracker')
+
 module.exports = app => {
   // Your code here
   app.log('Yay, the app was loaded!')
@@ -12,12 +14,12 @@ module.exports = app => {
   })
 
 
-  app.on('issues.changed', async context => {
-    console.log(context.repo({
-      issue_number: this.context.issue().number
-    }))
+  app.on('issues.edited', async context => {
+    console.log("issues changed")
+    console.log(context.issue().number)
     const tracker = await getTracker(context);
-    console.log(tracker.hasMobileLabel());
+    console.log(tracker.hasMobileLabel);
+    console.log(tracker.isTitleCorrect);
   })
 
   async function getTracker(context) {
